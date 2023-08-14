@@ -1,5 +1,14 @@
 
 # 学习笔记
+<img alt="Static Badge" src="https://img.shields.io/badge/language-Java-blue">
+
+<a href="https://github.com/HmEJ"><img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DHmEJ&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=GitHub" ></a>
+<a href="https://www.instagram.com/j.elmo/"><img alt="Static Badge" src="https://img.shields.io/badge/nothing-fllowme-brightgreen?logo=instagram&logoColor=ffffff&label=j.elmo">
+</a>
+<a href="https://www.youtube.com/channel/UC7Qfl9xgFGr3hT3zRXqAeEA"><img alt="Static Badge" src="https://img.shields.io/badge/nothing-followme-brightgreen?logo=youtube&logoColor=DC143C&label=j.elmo">
+</a>
+<a href="https://www.douyin.com/user/self"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%8A%96%E9%9F%B3-%E9%97%9C%E6%B3%A8%E6%88%91-brightgreen?logo=tiktok">
+</a>
 
 我使用的markdown编辑器是Obsidian，不是IDEA或者Typora。
 
