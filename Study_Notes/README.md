@@ -2,7 +2,7 @@
 # 学习笔记
 <img alt="Static Badge" src="https://img.shields.io/badge/language-Java-blue">
 
-<a href="https://github.com/HmEJ"><img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DHmEJ&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=GitHub" ></a>
+<a href="https://github.com/HmEJ"><img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DHmEJ&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=HmEJ" ></a>
 <a href="https://www.instagram.com/j.elmo/"><img alt="Static Badge" src="https://img.shields.io/badge/nothing-fllowme-brightgreen?logo=instagram&logoColor=ffffff&label=j.elmo">
 </a>
 <a href="https://www.youtube.com/channel/UC7Qfl9xgFGr3hT3zRXqAeEA"><img alt="Static Badge" src="https://img.shields.io/badge/nothing-followme-brightgreen?logo=youtube&logoColor=DC143C&label=j.elmo">
@@ -15,6 +15,7 @@
 由于不同编辑器对markdown语法的解释稍微有点差异，所以上传的md文件可能格式/排版不对 (在我自己这里是正常显示的)。
 
 ## 目录索引
+
 1. [👉Git笔记📖](Git.md)
 1. [👉HTML基础📖](1-HTML基础.md)
 2. [👉CSS📖](2-CSS.md)
@@ -35,3 +36,7 @@
 3. [👉集合测验💯](集合中难测试题.md)
 4. [👉IO流测验💯](IO流简单测试题.md)
 
+## 组长笔记
+👉[Jinhui-Huang的笔记](组长笔记)👈
+
+👉<a href="https://github.com/Jinhui-Huang"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DJinhui-Huang&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=Jinhui-Huang&labelColor=0996AD&color=0786BC)"></a>👈
