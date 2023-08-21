@@ -7,8 +7,10 @@
 [pom.xml](pom.xml)
 
 时序图：
+
 ![Alt text](img/fdf0b97da335fe09d14437e6ecdcf17.jpg)
 数据库表关系图：
+
 ![Alt text](img/Snipaste_2023-08-21_16-57-03.png)
 
 要求实现的功能：
