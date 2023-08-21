@@ -14,4 +14,4 @@
 3. [👉技术文档](Technical_Documention)
 
 ## 实训项目
-1. [👉超市收银系统(第一阶段控制台项目)](Project01)
+1. [👉超市收银系统(第一阶段控制台项目)](Project/Project01)
