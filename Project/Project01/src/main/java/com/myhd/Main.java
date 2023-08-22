@@ -5,6 +5,7 @@ import com.myhd.pojo.*;
 import com.myhd.service.impl.*;
 import org.apache.log4j.Logger;
 
+import java.io.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,14 +21,15 @@ import java.util.*;
  */
 class Main {
     static Logger logger = Logger.getLogger(Main.class);
+    /**
+     * @description 主方法
+     * @author JoneElmo
+     * @date 2023-08-20 15:06
+     * @param args
+     * @return void
+     */
     public static void main(String[] args) {
-        /**
-         * @description 主方法
-         * @author JoneElmo
-         * @date 2023-08-20 15:06
-         * @param args
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("************************************************");
         System.out.println("*****************超市收银系统********************");
@@ -53,13 +55,14 @@ class Main {
         }
         System.exit(0);
     }
+    /**
+     * @description 注册方法
+     * @author JoneElmo
+     * @date 2023-08-20 16:44
+     * @return void
+     */
     public static void Register(){
-        /**
-         * @description 注册方法
-         * @author JoneElmo
-         * @date 2023-08-20 16:44
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("*****************👉账户注册👈********************");
         System.out.println("________________________________________________");
@@ -86,16 +89,19 @@ class Main {
                     main(new String[1]);
                 case "0":
                     System.exit(0);
+                default:
+                    logger.error("操作数非法！");
             }
         }
     }
+    /**
+     * @description 登陆方法
+     * @author JoneElmo
+     * @date 2023-08-20 16:44
+     * @return void
+     */
     public static void Login(){
-        /**
-         * @description 登陆方法
-         * @author JoneElmo
-         * @date 2023-08-20 16:44
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("*****************👉账户登录👈********************");
         System.out.println("________________________________________________");
@@ -182,24 +188,31 @@ class Main2{
             }
         }
     }
-
+    /**
+     * @description 退货
+     * 结账时已经生成订单更新到数据库
+     * @author JoneElmo
+     * @date 2023-08-20 21:20
+     * @return void
+     */
     static void returnGoods() {
-        /**
-         * @description 退货
-         * 结账时已经生成订单更新到数据库
-         * @author JoneElmo
-         * @date 2023-08-20 21:20
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         OrderServiceImpl orderService = new OrderServiceImpl();
         OrderItemServiceImpl orderItemService = new OrderItemServiceImpl();
         System.out.println("请输入要退货的订单编号: ");
-        int orderId = in.nextInt();
+        String orderId = in.next();
         /*查到该订单信息(订单总额，订单时间)*/
-        Order order = orderService.selectByOrderId(orderId);
+        Order order = null;
+        try {
+            order = orderService.selectByOrderId(Integer.valueOf(orderId));
+        } catch (Exception e) {
+            logger.error("输入类型错误，请重新输入");
+            in.nextLine();
+            returnGoods();
+        }
         /*查找到该订单id关联的所有订单项(订单id，产品id，产品名，产品数量，产品单价，产品总价)*/
-        List<OrderItem> orderItems = orderItemService.selectAllOrderItem(orderId);
+        List<OrderItem> orderItems = orderItemService.selectAllOrderItem(Integer.valueOf(orderId));
         System.out.println("当前订单编号对应的所有订单项信息：");
         Iterator<OrderItem> iterator = orderItems.iterator();
         while (iterator.hasNext()){
@@ -218,7 +231,7 @@ class Main2{
         }
         while (true){
             ArrayList<Integer> list = new ArrayList<>();
-            list.add(orderId);
+            list.add(Integer.valueOf(orderId));
             System.out.println("请输入要退货的产品编号(输入0退出)：");
             int productId = in.nextInt();
             if (productId==0){
@@ -227,7 +240,7 @@ class Main2{
             list.add(productId);
             ProductServiceImpl productService = new ProductServiceImpl();
             Product product = productService.selectByproductId(productId);
-            OrderItem orderItem = new OrderItem(orderId, productId, product.getProductName(), 0, product.getProductPrice(), 0.0);
+            OrderItem orderItem = new OrderItem(Integer.valueOf(orderId), productId, product.getProductName(), 0, product.getProductPrice(), 0.0);
             map.put(list,orderItem);
         }
         logger.info("当前订单项列表:");
@@ -241,9 +254,14 @@ class Main2{
             OrderItem value = iterator3.next().getValue();
             list.add(value);
         }
-        orderService.returnOfGoods(order, list);
-        logger.info("退货成功！");
-        logger.info("正在返回上级菜单...");
+        /*👇*/
+        try {
+            orderService.returnOfGoods(order, list);
+            logger.info("订单重置成功！");
+            logger.info("正在返回上级菜单...");
+        } catch (Exception e) {
+            logger.error("订单为空，退货失败！");
+        }
         try {
             Thread.sleep(300);
         } catch (InterruptedException e) {
@@ -251,14 +269,14 @@ class Main2{
         }
         Main2.menu();
     }
-
+    /**
+     * @description 结账
+     * @author JoneElmo
+     * @date 2023-08-20 19:00
+     * @return void
+     */
     static void checkBill() {
-        /**
-         * @description 结账
-         * @author JoneElmo
-         * @date 2023-08-20 19:00
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("*****************👉结账页面👈*****************");
         System.out.println("________________________________________________");
@@ -290,16 +308,19 @@ class Main2{
                 logger.info("请先添加商品再生成订单!");
                 checkBill();
                 break;
+            default:
+                logger.error("非法操作符！");
+                checkBill();
         }
     }
-
+    /**
+     * @description 生成订单
+     * @author JoneElmo
+     * @date 2023-08-21 08:44
+     * @return void
+     */
     static void makeBill(Order order) {
-        /**
-         * @description 生成订单
-         * @author JoneElmo
-         * @date 2023-08-21 08:44
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         List<OrderItem> list= new ArrayList<>();
         OrderServiceImpl orderService = new OrderServiceImpl();
@@ -314,20 +335,35 @@ class Main2{
         Order order1 = orderService.billPlease(order, list);
         logger.info("订单生成完毕.信息如下：");
         logger.info(order1);
+        /*打印订单*/
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("d:\\桌面\\order-"+order1.getOrderId()+".txt"));
+            writer.write(order1.toString(),0,order1.toString().length());
+            logger.info("请检查桌面,订单文件名为: order-"+order1.getOrderId());
+            writer.close();
+            /*购物车置空*/
+            shoppingCar.clear();
+        } catch (IOException e) {
+            logger.error("指定文件不存在");
+        }
+
         System.out.println("输入0返回上一级：");
         String a = in.next();
         if ("0".equals(a)){
             Main2.menu();
+        }else {
+            logger.error("非法操作符!将返回上一级菜单");
+            Main2.menu();
         }
     }
-
+    /**
+     * @description 移除商品
+     * @author JoneElmo
+     * @date 2023-08-21 08:23
+     * @return void
+     */
     static void removeCommodity(Order order) {
-        /** 
-         * @description 移除商品
-         * @author JoneElmo
-         * @date 2023-08-21 08:23 
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("你购物车中的商品是：");
         /*显示购物车*/
@@ -370,16 +406,18 @@ class Main2{
             case "3":
                 makeBill(order);
                 break;
+            default:
+                logger.error("非法操作符！");
         }
     }
-
+    /**
+     * @description 添加商品
+     * @author JoneElmo
+     * @date 2023-08-21 08:23
+     * @return void
+     */
     static void addCommodity(Order order) {
-        /** 
-         * @description 添加商品
-         * @author JoneElmo
-         * @date 2023-08-21 08:23 
-         * @return void
-         */
+
         while (true){
             ArrayList<Integer> list = new ArrayList<>();
             ProductServiceImpl productService = new ProductServiceImpl();
@@ -418,14 +456,10 @@ class Main2{
                 System.out.println(next);
             }
             System.out.println("________________________________________________");
-            System.out.println("|| 0.返回上一级  | 1.修改商品数量   | 2.移除商品 ||");
-            System.out.println("|| 3.生成订单                                 ||");
+            System.out.println("|| 1.继续添加商品数量  | 2.移除商品 | 3.生成订单  ||");
             System.out.println("————————————————————————————————————————————————");
             String input = in.next();
             switch (input){
-                case "0":
-                    Main2.menu();
-                    break;
                 case "1":
                     continue;
                 case "2":
@@ -434,18 +468,21 @@ class Main2{
                 case "3":
                     makeBill(order);
                     break;
+                default:
+                    logger.error("非法操作符！将返回上一级");
+                    addCommodity(order);
             }
         }
 
     }
-
+    /**
+     * @description 二级菜单---管理员
+     * @author JoneElmo
+     * @date 2023-08-20 19:37
+     * @return void
+     */
     public static void menu3() {
-        /**
-         * @description 二级菜单---管理员
-         * @author JoneElmo
-         * @date 2023-08-20 19:37
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("*****************👉欢迎您,管理员👈*****************");
         System.out.println("________________________________________________");
@@ -476,7 +513,7 @@ class Main2{
     }
 }
 /**
- * @description 三级菜单
+ * @description 对账三级菜单
  * @author JoneElmo
  * @date 2023-08-20 19:43
  * @version 1.0
@@ -485,21 +522,24 @@ class Main2{
  */
 class Main3{
     static Logger logger = Logger.getLogger(Main3.class);
-
+    /**
+     * @description 活动列表
+     * @author JoneElmo
+     * @date 2023-08-20 19:00
+     * @return void
+     */
     static void showActivity() {
-        /**
-         * @description 活动列表
-         * @author JoneElmo
-         * @date 2023-08-20 19:00
-         * @return void
-         */
+
         ActivityServiceImpl service = new ActivityServiceImpl();
+        ActivityDaoImpl activityDao = new ActivityDaoImpl();
+        Integer countAll = activityDao.countAllPages();
+        int pages = (int) Math.ceil(countAll/5);
         Scanner in = new Scanner(System.in);
-        System.out.println("想查看第几页?\n 请输入:");
+        System.out.println("想查看第几页?(共 "+pages+" 页)\n 请输入:");
         int page = in.nextInt();
         System.out.println("正在获取活动列表...");
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -511,7 +551,7 @@ class Main3{
             Activity next = iterator.next();
             System.out.println(next.getActivityId()+"\t"+next.getActivityName()+"\t"+next.getStartDate()+"\t"+next.getEndDate());
         }
-        System.out.println("*****************当前是第"+page+"页***************");
+        System.out.println("*****************当前是第"+page+"页/共"+pages+"页*************");
         System.out.println("*****************👆当前活动列表👆*****************");
         System.out.println("0.返回上一级 1.继续查看");
         int input = in.nextInt();
@@ -522,16 +562,19 @@ class Main3{
             case 0:
                 Main2.menu();
                 break;
+            default:
+                logger.error("非法操作符！将返回上一级");
+                Main2.menu();
         }
     }
-
+    /**
+     * @description 展示商品
+     * @author JoneElmo
+     * @date 2023-08-20 19:00
+     * @return void
+     */
     static void showCommodity() {
-        /**
-         * @description 展示商品
-         * @author JoneElmo
-         * @date 2023-08-20 19:00
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("*****************👉当前仓库商品列表👈*****************");
         System.out.println("商品编号\t商品名\t\t\t商品单价");
@@ -547,16 +590,19 @@ class Main3{
         String input = in.next();
         if ("0".equals(input)){
             Main2.menu();
+        }else {
+            logger.error("非法操作符！将返回上一级");
+            Main2.menu();
         }
     }
-
+    /**
+     * @description 添加活动
+     * @author JoneElmo
+     * @date 2023-08-20 20:05
+     * @return void
+     */
     static void addActivity() {
-        /**
-         * @description 添加活动
-         * @author JoneElmo
-         * @date 2023-08-20 20:05
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("________________________________________________");
         System.out.println("|| 活动添加页面：👇                          ||");
@@ -567,20 +613,26 @@ class Main3{
         double critical = in.nextDouble();
         System.out.println("请设置折扣：(范围0~1)");
         double discount = in.nextDouble();
-        System.out.println("设置活动开始日期：");
-        Date start = Date.valueOf(in.next());
-        System.out.println("设置活动结束日期：");
-        Date end = Date.valueOf(in.next());
+        Boolean aBoolean = null;
+        try {
+            System.out.println("设置活动开始日期(格式 2023-08-21)：");
+            Date start = Date.valueOf(in.next());
+            System.out.println("设置活动结束日期(格式 2023-08-21)：");
+            Date end = Date.valueOf(in.next());
 
-        Activity activity = new Activity();
-        activity.setActivityName(activityName);
-        activity.setCriticalTotal(critical);
-        activity.setDiscount(discount);
-        activity.setStartDate(start);
-        activity.setEndDate(end);
+            Activity activity = new Activity();
+            activity.setActivityName(activityName);
+            activity.setCriticalTotal(critical);
+            activity.setDiscount(discount);
+            activity.setStartDate(start);
+            activity.setEndDate(end);
 
-        ActivityServiceImpl service = new ActivityServiceImpl();
-        Boolean aBoolean = service.insertActivity(activity);
+            ActivityServiceImpl service = new ActivityServiceImpl();
+            aBoolean = service.insertActivity(activity);
+        } catch (Exception e) {
+            logger.error("非法输入！正在返回...");
+            addActivity();
+        }
         if (aBoolean){
             logger.info("活动添加成功");
         }
@@ -589,16 +641,19 @@ class Main3{
         String input = in.next();
         if ("0".equals(input)){
             Main2.menu3();
+        }else {
+            logger.error("非法操作符！将返回上一级");
+            Main2.menu3();
         }
     }
-
+    /**
+     * @description 修改活动
+     * @author JoneElmo
+     * @date 2023-08-20 20:05
+     * @return void
+     */
     static void modifyActivity() {
-        /**
-         * @description 修改活动
-         * @author JoneElmo
-         * @date 2023-08-20 20:05
-         * @return void
-         */
+
         ActivityServiceImpl service = new ActivityServiceImpl();
         Scanner in = new Scanner(System.in);
         System.out.println("________________________________________________");
@@ -645,6 +700,9 @@ class Main3{
         String input = in.next();
         if ("0".equals(input)){
             Main2.menu3();
+        }else {
+            logger.error("非法操作符！将返回上一级");
+            Main2.menu3();
         }
     }
 
@@ -671,16 +729,19 @@ class Main3{
         String input = in.next();
         if ("0".equals(input)){
             Main2.menu3();
+        }else {
+            logger.error("非法操作符！将返回上一级");
+            Main2.menu3();
         }
     }
-
+    /**
+     * @description 对账
+     * @author JoneElmo
+     * @date 2023-08-20 22:51
+     * @return void
+     */
     public static void checkout() {
-        /**
-         * @description 对账
-         * @author JoneElmo
-         * @date 2023-08-20 22:51
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
             /**/
         System.out.println("________________________________________________");
@@ -704,11 +765,12 @@ class Main3{
                 break;
             default:
                 logger.error("字符非法！\n请重新输入:");
+                checkout();
         }
     }
 }
 /**
- * @description 四级菜单
+ * @description 对账功能
  * @author JoneElmo
  * @date 2023-08-20 23:19
  * @version 1.0
@@ -717,13 +779,14 @@ class Main3{
  */
 class Main4{
     static Logger logger = Logger.getLogger(Main4.class);
+    /**
+     * @description 查询账户余额
+     * @author JoneElmo
+     * @date 2023-08-20 23:19
+     * @return void
+     */
     public static void selectAccount() {
-        /**
-         * @description 查询账户余额
-         * @author JoneElmo
-         * @date 2023-08-20 23:19
-         * @return void
-         */
+
         Scanner in = new Scanner(System.in);
         System.out.println("________________________________________________");
         System.out.println("|| 查询账户余额页面：👇                           ||");
@@ -746,31 +809,42 @@ class Main4{
             String input = in.next();
             if ("0".equals(input)){
                 Main3.checkout();
+            }else {
+                logger.error("非法字符！将返回上一层");
+                Main3.checkout();
             }
         }
     }
 
+    /**
+     * @description 按时间查账
+     * @author JoneElmo
+     * @date 2023-08-20 23:35
+     * @return void
+     */
     public static void selectByTime() {
-        /**
-         * @description 按时间查账
-         * @author JoneElmo
-         * @date 2023-08-20 23:35
-         * @return void
-         */
-        // TODO: 2023/8/21 021 时间转换有问题
+
+
         OrderServiceImpl orderService = new OrderServiceImpl();
         Scanner in = new Scanner(System.in);
         System.out.println("________________________________________________");
         System.out.println("|| 按时间查账页面：                            ||");
         System.out.println("————————————————————————————————————————————————");
-        System.out.println("请输入开始日期(格式2023-08-20):");
-        String start = in.nextLine();
-        System.out.println("请输入结束日期(格式2023-08-21):");
-        String end = in.nextLine();
+        LocalDateTime startTime = null;
+        LocalDateTime endTime = null;
+        try {
+            System.out.println("请输入开始日期(格式2023-08-20):");
+            String start = in.nextLine();
+            System.out.println("请输入结束日期(格式2023-08-21):");
+            String end = in.nextLine();
 
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime startTime = LocalDateTime.parse(start+" 00:00:00", df);
-        LocalDateTime endTime = LocalDateTime.parse(end+" 23:59:59", df);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            startTime = LocalDateTime.parse(start+" 00:00:00", df);
+            endTime = LocalDateTime.parse(end+" 23:59:59", df);
+        } catch (Exception e) {
+            logger.error("非法输入！正在返回...");
+            selectByTime();
+        }
 
         Double money = orderService.countMoneyByDate(startTime, endTime);
         System.out.println("________________________________________________");
@@ -780,16 +854,19 @@ class Main4{
         String input = in.next();
         if ("0".equals(input)){
             Main3.checkout();
+        }else {
+            logger.error("非法字符！将返回上一级");
+            Main3.checkout();
         }
     }
-
+    /**
+     * @description 根据商品查账
+     * @author JoneElmo
+     * @date 2023-08-20 23:41
+     * @return void
+     */
     public static void selectByCommodity() {
-        /**
-         * @description 根据商品查账
-         * @author JoneElmo
-         * @date 2023-08-20 23:41
-         * @return void
-         */
+
         OrderItemServiceImpl orderItemService = new OrderItemServiceImpl();
         Scanner in = new Scanner(System.in);
         System.out.println("________________________________________________");
@@ -806,6 +883,9 @@ class Main4{
         System.out.println("输入0返回上一层,请输入：");
         String input = in.next();
         if ("0".equals(input)){
+            Main3.checkout();
+        }else {
+            System.out.println("非法字符！将返回上一级");
             Main3.checkout();
         }
     }

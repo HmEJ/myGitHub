@@ -12,56 +12,57 @@ import org.omg.CORBA.PRIVATE_MEMBER;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
-
+/**
+ * @description
+ * @author JoneElmo
+ * @date 2023-08-20 14:34
+ * @version 1.0
+ * @package com.myhd.service.impl
+ * @class OrderServiceImpl
+ */
 public class OrderServiceImpl implements IOrderService {
     Logger logger = Logger.getLogger(OrderServiceImpl.class);
     OrderItemServiceImpl ois = new OrderItemServiceImpl();
 
+
+    private OrderDaoImpl odi = new OrderDaoImpl();
     /**
      * @description
      * @author JoneElmo
      * @date 2023-08-20 14:34
-     * @version 1.0
-     * @package com.myhd.service.impl
-     * @class OrderServiceImpl
+     * @param order
+     * @return java.lang.Integer
      */
-    private OrderDaoImpl odi = new OrderDaoImpl();
     @Override
     public Integer InsertOrder(Order order) {
-        /**
-         * @description
-         * @author JoneElmo
-         * @date 2023-08-20 14:34
-         * @param order
-         * @return java.lang.Integer
-         */
+
         Integer i = odi.insertOrder(order);
         return i;
     }
-
+    /**
+     * @description
+     * @author JoneElmo
+     * @date 2023-08-20 14:34
+     * @param orderId
+     * @return com.myhd.pojo.Order
+     */
     @Override
     public Order selectByOrderId(Integer orderId) {
-        /**
-         * @description
-         * @author JoneElmo
-         * @date 2023-08-20 14:34
-         * @param orderId
-         * @return com.myhd.pojo.Order
-         */
+
         Order order = odi.selectByOrderId(orderId);
         return order;
     }
-
+    /**
+     * @description  退货业务 order订单对象 orderItems 包含该订单的所有订单项。
+     * @author JoneElmo
+     * @date 2023-08-20 14:34
+     * @param order
+     * @param orderItems
+     * @return com.myhd.pojo.Order
+     */
     @Override
     public Order returnOfGoods(Order order, List<OrderItem> orderItems) {
-        /**
-         * @description  退货业务 order订单对象 orderItems 包含该订单的所有订单项。
-         * @author JoneElmo
-         * @date 2023-08-20 14:34
-         * @param order
-         * @param orderItems
-         * @return com.myhd.pojo.Order
-         */
+
         double count = 0.0;
         Iterator<OrderItem> iterator = orderItems.iterator();
         /*遍历该订单项，将订单项更新到数据库。并获取订单项的金额*/
@@ -80,7 +81,7 @@ public class OrderServiceImpl implements IOrderService {
         account.setAccountPwd("administrator");
         /*账户原金额*/
         Double p = accountService.selectAccount(account);
-        Boolean aBoolean = accountService.updateAccount(p-order.getOrderTrueTotal()+newPrice);
+        Boolean aBoolean = accountService.updateAccount(newPrice-order.getOrderTrueTotal()); //money要更改的金额
         OrderDaoImpl orderDao = new OrderDaoImpl();
         order.setOrderId(order.getOrderId());
         order.setOrderDateTime(order.getOrderDateTime());
@@ -94,17 +95,17 @@ public class OrderServiceImpl implements IOrderService {
         }
         return order;
     }
-
+    /**
+     * @description 结账
+     * @author JoneElmo
+     * @date 2023-08-20 21:30
+     * @param order
+     * @param orderItems
+     * @return com.myhd.pojo.Order
+     */
     @Override
     public Order billPlease(Order order, List<OrderItem> orderItems) {
-        /**
-         * @description 结账
-         * @author JoneElmo
-         * @date 2023-08-20 21:30
-         * @param order
-         * @param orderItems
-         * @return com.myhd.pojo.Order
-         */
+
         Iterator<OrderItem> iterator = orderItems.iterator();
         double count = 0.0;
         while (iterator.hasNext()){
@@ -121,20 +122,22 @@ public class OrderServiceImpl implements IOrderService {
         /*更新数据库*/
         OrderDaoImpl orderDao = new OrderDaoImpl();
 
+        AccountServiceImpl accountService = new AccountServiceImpl();
+        accountService.updateAccount(trueTotal);
         orderDao.updateOrder(order);
         return order;
     }
-
+    /**
+     * @description 按照日期查账
+     * @author JoneElmo
+     * @date 2023-08-20 15:40
+     * @param startTime
+     * @param endTime
+     * @return java.lang.Double
+     */
     @Override
     public Double countMoneyByDate(LocalDateTime startTime, LocalDateTime endTime) {
-        /** 
-         * @description 按照日期查账
-         * @author JoneElmo
-         * @date 2023-08-20 15:40
-         * @param startTime
-         * @param endTime
-         * @return java.lang.Double
-         */ 
+
         Double aDouble = odi.countMoneyByDate(startTime, endTime);
         return aDouble;
     }
