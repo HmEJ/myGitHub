@@ -6,6 +6,10 @@
 
 [pom.xml](pom.xml)
 
+[答辩PPT](src/main/resources/答辩.pptx)
+
+[需求分析文档](src/main/resources/超市收银系统需求文档.docx)
+
 时序图：
 
 ![Alt text](img/fdf0b97da335fe09d14437e6ecdcf17.jpg)
