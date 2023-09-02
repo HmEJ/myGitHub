@@ -57,7 +57,7 @@ function test05(){
 `Array`
 
 ### 流程控制 
-同Java
+同[[3-Java SE 入门#^64eb84|Java流程控制]]
 
 ### 运算符
 
@@ -209,9 +209,129 @@ main();
 ```
 >`this.属性` 表示当前对象的属性值。 
 
-### JS中的继承
-原型 Prototype
+### prototype 原型
+在JavaScript中，每个对象都有一个与之相关联的原型对象（prototype object）。原型对象是对象的属性和方法的集合，它可以被其他对象继承，从而实现对象之间的共享属性和方法。
+1. 原型链(prototype chain)
+	JavaScript中的对象之间通过原型链连接在一起。每个对象都有一个指向其原型对象的链接。如果某个属性或方法在当前对象上找不到，JavaScript会沿着原型链向上搜索，直到找到匹配的属性或方法，或者达到原型链的顶端（通常是`Object.prototype`）
+2. 构造函数(constructor)
+	构造函数是用于创建对象的函数。构造函数可以具有一个原型对象，该原型对象定义了该构造函数创建的对象的共享属性和方法。构造函数通常以大写字母开头，以便区分普通函数
+3. 原型属性(prototype property)
+	构造函数可以通过将属性或方法添加到它们的原型对象上，使所有由该构造函数创建的对象都共享这些属性和方法。这样可以节省内存，因为所有实例共享同一个原型对象，而不是每个实例都复制一份
+考虑如下示例：
+```js
+// 定义一个构造函数
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
 
+// 在构造函数的原型对象上添加一个方法
+Person.prototype.sayHello = function() {
+  console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+};
+
+// 使用构造函数创建对象
+const person1 = new Person("Alice", 30);
+const person2 = new Person("Bob", 25);
+
+// 调用共享的方法
+person1.sayHello(); // 输出：Hello, my name is Alice and I am 30 years old.
+person2.sayHello(); // 输出：Hello, my name is Bob and I am 25 years old.
+
+```
+
+>1. 所有的内建对象都遵循相同的模式（pattern）：
+>>a. 方法都存储在 prototype 中（`Array.prototype`、`Object.prototype`、`Date.prototype` 等）
+>>b. 对象本身只存储数据（数组元素、对象属性、日期）
+>2. 原始数据类型也将方法存储在包装器对象的 prototype 中：`Number.prototype`、`String.prototype` 和 `Boolean.prototype`。只有 `undefined` 和 `null` 没有包装器对象
+>3. 内建原型可以被修改或被用新的方法填充。但是不建议更改它们。唯一允许的情况可能是，当我们添加一个还没有被 JavaScript 引擎支持，但已经被加入 JavaScript 规范的新标准时，才可能允许这样做
+
+### JS中的继承
+JS中有三种方式实现继承：
+1. 原型继承
+- 原型继承是最常见的继承方式。它使用原型链连接对象
+- 每个对象都有一个原型对象。通过`prototype`属性访问
+- 子对象可以通过将其原型设置为父对象来继承父对象的属性和方法
+```js
+//创建父类构造器
+function Parent(name){
+	this.name = name;
+}
+//使用原型为父类添加方法
+Parent.prototype.greet = function(){
+	console.info("hello iam "+this.name);
+}
+//创建子类构造器
+function Child(name,age){
+	this.age = age;
+	//调用父类构造器
+	Parent.call(this,name);
+}
+//让子类原型指向父类原型，完成继承
+Child.prototype = Object.create(Parent.prototype);
+//创建子类对象
+const child = new Child("mh",21);
+//调用继承而来的方法。
+child.greet();
+```
+>以上继承代码中出现了一个方法 `call( thisArg, agr1, arg2,... )`
+>`call()`方法是JS中的一个内置方法。它是用于调用函数的方法，它允许你在调用函数时***指定函数内部的`this`值及传递函数所需要的参数***。
+>其基本语法如下： `function.call( thisArg, agr1, arg2,... )`
+>	`function` 是要调用的函数
+>	`thisArg` 是**要调用的函数内部的`this`值**，即函数执行时的上下文。你可以传递任何对象作为`thisArg`，该对象将成为函数执行时的`this`
+>	`arg1`, `arg2`, ... 是要传递给函数的参数
+
+2. 类继承(ES6之后的方法)
+- ES6引入了类和`extends`关键字，提供了清晰的面向对象编程语法
+- 使用`class`定义类，使用`extends`实现继承，可以继承父类的属性和方法
+```js
+//创建父类
+class Parent{
+	//定义父类构造器
+	constructor(name){
+		this.name = name;
+	}
+	//生成父类的方法
+	greet(){
+		console.info("hello,my nmae is "+this.name);
+	}
+}
+//创建子类 通过extends关键字继承父类
+class Son extends Parent{
+	//定义子类构造器
+	constructor(name,age){
+		super(name);
+		this.age = age;
+	}
+}
+//生成子类对象
+const child = new Son("ss",5);
+//调用继承而来的方法
+child.greet(); //控制台输出 hello,my nmae is ss
+```
+
+3. `Object.create()`
+- `Object.create()`方法可以创建一个新对象，将指定对象作为新对象的原型
+- 这种方式**不涉及构造函数**，但可以实现对象之间的继承
+```js
+// 父对象
+const parent = {
+  name: "Alice",
+  greet: function() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+};
+
+// 子对象继承父对象
+const child = Object.create(parent);
+child.age = 5;
+
+// 子对象可以调用父对象的方法
+child.greet(); // 输出：Hello, my name is Alice
+
+```
+
+> 以上三种继承的方式，可以根据项目需求和个人偏好选择适合的方法。**类继承通常是最现代和推荐的方式**，但原型继承和`Object.create()`也是有效的
 
 ### JS中的事件
 事件的定义：
@@ -270,7 +390,6 @@ main();
 
 ### JS中事件的阻止
 `事件=return false`
-
 
 ## BOM 
 `Browser Object Model` 浏览器对象模型 
@@ -350,3 +469,155 @@ function ttt(){
 ```
 
 👆 以上代码 获取的是屏幕的宽度和高度信息，以及显示当前浏览器用户代理字符串（包含有关浏览器、操作系统和设备的信息）和 显示浏览器的名称
+
+## DOM
+### 获取节点对象
+直接：
+```js
+//通过id 获取元素
+document.getElementById("aid").href="https://www.baidu.com"
+//通过name 获取元素
+document.getElementsByName("sname")[0].innerText ="teacherName";
+//通过class属性 获取元素
+document.getElementsByClassName("acla")[0].style.color="deepskyblue";
+```
+
+间接：
+### 操作属性
+系统属性可以在获取元素后直接获得
+```js
+let obj = document.getElementsByTagName("input")[2];
+console.info(obj.name);
+console.info(obj.id);
+console.info(obj.type);
+console.info(obj.value);  
+```
+自定义属性通过`setAttribute() / getAttribute() `方法来设置和获取
+```js
+let val = obj.getAttribute("sdfsdf");   
+console.log(val); 
+obj.setAttribute("niub","牛逼");   //K-V形式存储属性名和属性值
+console.log(obj.getAttribute("niub"));
+```
+### 操纵外观属性
+```js
+document.getElementById("tttt").style.overflow="";
+```
+
+### 操纵文档结构
+```js
+//创建文本框对象
+let txt = document.createElement("input");
+//设置对象的value属性值
+txt.value =parseInt(Math.random()*20) ;
+//创建按钮
+let del_btn = document.createElement("button");
+//设置按钮双标签间的文本内容
+del_btn.innerText="删除";
+============================================
+//添加子元素
+div.appendChild(txt);
+============================================
+//删除子元素
+div.removeChild(txt);
+```
+
+### 表单
+表单是非常特殊的一个HTML组件。在JS中表单不同于其他组件。
+#### 获取form表单
+```js
+//获取form对象1
+let form = document.getElementsByTagName("form")[0];
+//获取form对象2
+let form = document.myform;   // 最简便
+//获取form对象3
+let form = document.getElementById("myform")
+```
+#### 获取表单元素
+```js
+//获取表单元素1
+let val = document.getElementsByName("wd")[0];
+//获取表单元素2
+let val = document.myform.wd;   //最简便 
+//获取表单元素3
+let val = document.getElementById("wd");
+```
+
+## JQuery ：write less, do more
+	JQuery是JavaScript的类库
+`JQuery`的主要目的是为了简化`Js`的`DOM`模块, 支持独立开发，防止硬编码。
+
+`JQuery`**语法格式**: 
+`$("选择器").方法(参数)`
+`$("DOM对象").方法(参数)`
+`$("HTML语句").方法(参数)`
+
+
+窗体加载事件：
+`$(document).ready( ... )`
+`$("body").ready( ... )`
+
+### JQuery选择器
+同[[2-CSS#^61de39|CSS选择器]]。
+考虑如下代码：
+```js
+$(document).ready(function(){
+	$("td").css("background-color","aquamarine");
+	$("#td01").css("background-color","indianred");
+	$("td#td01").css("color","whitesmoke");
+	$("td[id]").css("font-size","30px"); //选择td标签下所有具有id属性的元素
+	$("td[id = 'td01']").css("background-color","black"); //属性选择器
+	$("td:eq(5)").css("background-color","yellow");  //索引为5 的  equals
+	$("td:gt(5)").css("background-color","yellow"); //索引5之后的  不带5 great than
+	$("td:lt(5)").css("background-color","pink"); //索引5之前的  不带5 less than
+	$("td:even").css("background-color","cyan"); //even偶数   odd奇数
+	/*为元素添加/移除现成的CSS样式*/
+	$("td").addClass("color")   // 使用addClass()方法。参数为CSS选择器名
+	$("td").removeClass("color") //使用removeClass()方法移除CSS样式
+});
+```
+
+### JQuery 获取属性
+考虑如下代码：
+```js
+alert($("table").css("height")); //获取CSS属性：高度
+$("input").val(333);  //给input标签的value赋值
+alert( $("input").val()); //获取标签的value值
+/*获得文本属性*/
+alert($("table").text());
+alert($("table").html());
+/*获得其他属性(自定义属性)*/
+alert($("img").attr("src"));
+```
+
+### JQuery修改标签结构
+考虑如下代码：
+```js
+$(document).ready(function(){
+	//1.设置按钮单击事件
+	let money = 0;
+	$("button").click(function(){
+		let val = parseInt(Math.random()*100+1);
+		//创建标签对象
+		$(
+			"<input disabled='disabled' type='text' value='"+val+"'/>"+
+			"<input type='button' value='删除' />"+
+			"<br>"
+		).appendTo( $("div") );
+		
+		money = val+money;
+		$("span").text("总价:"+money+"元");
+		
+	});
+	//2.为即将显示的删除按钮添加单击事件: on(事件名称,标签对象,方法)
+	$(document).on("click","input[value='删除']",function(){
+		//$(this)代指当前标签对象
+		let a = $(this).prev().val();  //获取删除标签前一个标签的value值
+		money = money-a;
+		$("span").text("总价:"+money+"元");
+		$(this).prev().remove();
+		$(this).next().remove();
+		$(this).remove();  //我删我自己	
+	});
+});
+```
