@@ -71,7 +71,7 @@
     附: 💾[sql文件](tb_order.sql)
 
 ---
-## 组长笔记
-👉[Jinhui-Huang的笔记](组长笔记)👈
+## 组长の笔记
+组长的笔记：👉[Jinhui-Huang的笔记](组长笔记)👈
 
-👉<a href="https://github.com/Jinhui-Huang"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DJinhui-Huang&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=Jinhui-Huang&labelColor=0996AD&color=0786BC)"></a>👈
+关注我的组长：👉<a href="https://github.com/Jinhui-Huang"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DJinhui-Huang&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=Jinhui-Huang&labelColor=0996AD&color=0786BC)"></a>👈
