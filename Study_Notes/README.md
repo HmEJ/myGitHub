@@ -1,5 +1,6 @@
 
 # 学习笔记
+
 <img alt="Static Badge" src="https://img.shields.io/badge/language-Java-blue">
 
 <a href="https://github.com/HmEJ"><img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DHmEJ&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=HmEJ" ></a>
@@ -9,7 +10,6 @@
 </a>
 <a href="https://www.douyin.com/user/MS4wLjABAAAAtanaGDoe_VRcpfRVAsEoYSTvSf4AnjXw2qPgWDvaosw"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%8A%96%E9%9F%B3-%E9%97%9C%E6%B3%A8%E6%88%91-brightgreen?logo=tiktok">
 </a>
-
 
 我使用的markdown编辑器是Obsidian，不是IDEA或者Typora。
 
@@ -25,15 +25,22 @@
 1. [👉Git笔记📖](Git.md)
 1. [👉JVM](JVM组成.md)
 
-***前端***
+
+
+<details>
+<summary>前端</summary>
 
 1. [👉HTML基础📖](1-HTML基础.md)
 2. [👉CSS📖](2-CSS.md)
-11. [👉JavaScript📖](JavaScript.md)
-1. [👉Ajax](Ajax.md)
-1. [👉VUE](VUE.md)
+3.  [👉JavaScript📖](JavaScript.md)
+4. [👉Ajax](Ajax.md)
+5. [👉VUE](VUE.md)
 
-***JavaSE***
+</details>
+
+<details>
+
+<summary> JavaSE</summary>
 
 1. [👉JAVA入门📖](3-Java%20SE%20入门.md)
 2. [👉方法📖](4-方法.md)
@@ -48,8 +55,20 @@
 11. [👉反射📖](13-反射.md)
 12. [👉JDBC📖](14-JDBC.md)
 
+</details>
+
+
+<details>
+<summary>JavaEE</summary>
+
+1. [👉JavaWeb📖](JavaWeb.md)
+
+</details>
+
 ---
+
 ## 面试记录
+
 由于前三次面试，记录人员记录的并不规范，整理难度较大，所以我懒得整理了，从第四次开始，之后的面试记录我会整理好。前三次面试记录我上传一个[doc文档](面试记录.docx)吧
 
 > 面试记录规范： [文档](面试记录规范文档.md)
@@ -73,7 +92,9 @@
     附: 💾[sql文件](tb_order.sql)
 
 ---
+
 ## 组长の笔记
+
 组长的笔记：👉[Jinhui-Huang的笔记](组长笔记)👈
 
 关注我的组长：👉<a href="https://github.com/Jinhui-Huang"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3DJinhui-Huang&query=%24.data.totalSubs&suffix=%20followers&logo=github&label=Jinhui-Huang&labelColor=0996AD&color=0786BC)"></a>👈
