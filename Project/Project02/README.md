@@ -2,13 +2,13 @@
 
 ## 项目介绍
 
-前端技术栈：JQuery, CSS(AmazeUI)
+[原项目地址: 点击查看](https://github.com/Jinhui-Huang/jsoft-project02/tree/master)
 
-后端技术栈: Mybatis, Druid-JDBC
+前端技术栈：`Ajax`, `JS`, `CSS`
 
-数据库: MySQL
+后端技术栈: `Mybatis`, `Druid-JDBC`, `junit`, `jwt(令牌验证)`, `logback+sl4j+lombok(日志记录框架)`, `servlet+jsp+connector(服务器-数据库连接接口)`, `maven(项目管理框架)`
 
-[源码：点击查看](jsoft-project02/src)
+数据库: `MySQL`
 
 ## 材料
 
