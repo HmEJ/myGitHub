@@ -4,6 +4,8 @@
 
 [原项目地址: 点击查看](https://github.com/Jinhui-Huang/jsoft-project02/tree/master)
 
+[项目需求文档: 点击查看](供应商管理系统.docx)
+
 前端技术栈：`Ajax`, `JS`, `CSS`
 
 后端技术栈: `Mybatis`, `Druid-JDBC`, `junit`, `jwt(令牌验证)`, `logback+sl4j+lombok(日志记录框架)`, `servlet+jsp+connector(服务器-数据库连接接口)`, `maven(项目管理框架)`
