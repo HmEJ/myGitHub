@@ -24,7 +24,7 @@
 1. [👉重要知识点汇总📕](重要知识点汇总📖.md)
 2. [👉Git笔记📖](Git.md)
 3. [👉JVM📖](JVM组成.md)
-
+4. [👉spring学习记录10-6](SpringPractice10-6/学习记录10-6.md)
 
 
 <details>
