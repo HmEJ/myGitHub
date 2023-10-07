@@ -21,11 +21,14 @@
 
 ![温馨提示](img/Snipaste_2023-09-02_15-52-55.png)
 
+<details>
+<summary>知识点</summary>
+
 1. [👉重要知识点汇总📕](重要知识点汇总📖.md)
 2. [👉Git笔记📖](Git.md)
 3. [👉JVM📖](JVM组成.md)
-4. [👉spring学习记录10-6](SpringPractice10-6/学习记录10-6.md)
-
+   
+</details>
 
 <details>
 <summary>前端</summary>
@@ -66,6 +69,12 @@
 </details>
 
 ---
+
+## 框架
+
+1. [👉spring学习记录10-6](SpringPractice10-6/学习记录10-6.md)
+2. [👉maven逆向工程自动生成mybatis骨架](mybatis-generator.md)
+
 
 ## 面试记录
 
