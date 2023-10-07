@@ -72,8 +72,9 @@
 
 ## 框架
 
-1. [👉spring学习记录10-6](SpringPractice10-6/学习记录10-6.md)
-2. [👉maven逆向工程自动生成mybatis骨架](mybatis-generator.md)
+1. [👉Maven逆向工程自动生成MyBatis骨架](mybatis-generator.md)
+2. [👉Spring学习记录|最后一天|完全体|10-6](SpringPractice10-6/学习记录10-6.md)
+3. [👉SpringMVC学习记录|第一天|HelloWord阶段|10-7](SpringMVC/SpringMVC学习记录10-7.md)
 
 
 ## 面试记录
