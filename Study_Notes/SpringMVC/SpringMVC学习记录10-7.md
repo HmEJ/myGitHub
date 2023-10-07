@@ -1,5 +1,34 @@
 # SpringMVC学习记录第一天 HelloWord阶段   10-7
 
+## SpringMVC组件
+
+1. **DispatcherServlet 前端控制器**
+
+是SpringMVC的核心组件之一，负责接收所有的HTTP请求并将它们路由到适当的处理程序(Handler)。还处理视图解析和渲染
+
+2. **HandlerMapping 处理器映射器**
+
+用于确定请求应该由哪个处理器(Handler)来执行
+
+3. **HandlerAdapter 处理器适配器**
+
+负责执行处理器(Handler)，拿到返回结果ModelAndView后交给前端处理器解析和渲染
+
+4. **Handler 处理器/控制器**
+
+负责处理前端请求，完成业务逻辑，返回ModelAndView给HandlerAdapter
+
+5. **ViewResolver 视图解析器**
+
+负责将前端控制器中拿到的ModelAndView解析出路径并生成View
+对象交由前端控制器来渲染页面
+
+
+
+## SpringMVC控制流程
+
+![Alt text](img/SpringMVC%E6%8E%A7%E5%88%B6%E6%B5%81%E7%A8%8B.jpg)
+
 ## 1. 快速构建一个maven Web项目
 
 1. 由webapp模板创建maven项目
