@@ -78,6 +78,21 @@ SpringMVC Controller有三种返回值类型: `ModelAndView`, `String`, `Void`
 
 跳转成功，这个返回的是视图名称，会经过视图解析器处理，自动拼接上`.jsp` 从而正确跳转。
 
+### 视图解析器配置
+
+```xml
+<!--视图解析器-->
+<!--配置视图解析器-->
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- prefix属性推荐配置为/WEB-INF/ -->
+    <property name="prefix" value="/"/> 
+    <property name="suffix" value=".jsp"/>
+</bean>
+```
+查看`InternalResourceViewResolver`源码，作者告诉我们，建议将仅用作视图的 jsp 文件放在 WEB-INF 下以防止直接访问:
+
+![](img/Snipaste_2023-10-08_20-45-59.png)
+
 
 ## 参数绑定
 
