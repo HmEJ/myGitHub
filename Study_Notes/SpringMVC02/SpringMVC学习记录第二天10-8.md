@@ -50,6 +50,10 @@
 
 3. **params 限制参数**
 
+该属性可以限定请求中需要出现哪些参数，或者限定特定参数的值。
+
+例如: `@RequestMapping(params = {"ename=zhangsan"} )` 限定请求中的ename参数的值为`zhangsan`。只有满足该需求才能执行该handler方法。
+
 ## 返回值类型
 
 SpringMVC Controller有三种返回值类型: `ModelAndView`, `String`, `Void`
