@@ -2,7 +2,7 @@
 
 ## 创建SpringMVC项目步骤
 
-1. 先在web.xml中[配置DispatcherServlet(前端控制器)]()，[全局编码过滤器](#配置全局字符编码过滤器)等
+1. 先在web.xml中[配置DispatcherServlet(前端控制器)](../SpringMVC/SpringMVC学习记录10-7.md#4-配置-webxml)，[全局编码过滤器](#配置全局字符编码过滤器)等
 2. resources下[新建IoC容器](../SpringMVC/SpringMVC学习记录10-7.md#3-创建ioc容器)，[设置扫包](../SpringMVC/SpringMVC学习记录10-7.md#3-创建ioc容器)，[注解驱动](../SpringMVC/SpringMVC学习记录10-7.md#3-创建ioc容器)，[视图解析器](#视图解析器配置)，[MVC拦截器](#拦截器-interceptor)等
 3. 创建对应java代码
 
