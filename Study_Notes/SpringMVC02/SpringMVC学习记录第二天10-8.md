@@ -1,5 +1,11 @@
 # SpringMVC学习记录第二天10-8
 
+## 创建SpringMVC项目步骤
+
+1. 先在web.xml中配置DispatcherServlet(前端控制器)，全局编码过滤器等
+2. resources下新建IoC容器，设置扫包，注解驱动，视图解析器，MVC拦截器等
+3. 创建对应java代码
+
 ## 配置全局字符编码过滤器
 
 ```html
