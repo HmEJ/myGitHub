@@ -24,10 +24,11 @@
 <details>
 <summary>知识点</summary>
 
-1. [👉重要知识点汇总📕](重要知识点汇总📖.md)
+1. [👉重要知识点汇总📕](🌟重要知识点汇总.mdmd)
 2. [👉Git笔记📖](Git.md)
 3. [👉JVM📖](JVM组成.md)
-   
+4. [👉MySql](SQL数据库.md)
+
 </details>
 
 <details>
@@ -77,6 +78,10 @@
 3. [👉SpringMVC学习记录|第一天|HelloWord阶段|10-7](SpringMVC/SpringMVC学习记录10-7.md)
 4. [👉SpringMVC学习记录|第二天|10-8](SpringMVC02/SpringMVC学习记录第二天10-8.md)
 5. [👉SSM整合](ssm-integration/记录.md)
+
+## 设计模式
+
+[设计模式](设计模式/设计模式.md)
 
 ## 面试记录
 
