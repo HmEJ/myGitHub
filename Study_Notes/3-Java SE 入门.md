@@ -49,7 +49,7 @@
 		- *字符类型*
 			char (2byte)文字、符号、数字
 		- 布尔类型
-			boolean (1bit)真假值
+			boolean (1byte)真假值
 	- **引用数据类型**
 		字符串String 
 		数组
