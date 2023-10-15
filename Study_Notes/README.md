@@ -79,6 +79,7 @@
 4. [👉SpringMVC学习记录|第二天|10-8](SpringMVC02/SpringMVC学习记录第二天10-8.md)
 5. [👉SpringMVC 10-11|10-12](SpringMVC03/SpringMVC02/SpringMVC45%2010-1112.md)
 6. [👉SSM整合](ssm-integration/记录.md)
+7. [👉maven聚合方式整合SSM](web-aggregation/记录.md)
 
 ## 设计模式
 
