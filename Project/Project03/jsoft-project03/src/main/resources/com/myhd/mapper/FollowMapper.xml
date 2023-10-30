@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myhd.mapper.FollowMapper">
+
+    <insert id="saveFollowInfo" parameterType="com.myhd.entity.Follow">
+        insert into tb_follow values (#{userId},#{companyId},#{followStatus})
+    </insert>
+
+    <select id="findFollowStatus" resultType="com.myhd.entity.Follow">
+        select follow_status from tb_follow where user_id = #{userId} and company_id = #{companyId}
+    </select>
+
+    <update id="setFollowStatus" parameterType="com.myhd.entity.Follow">
+        update tb_follow set follow_status = #{followStatus} where user_id = #{userId} and company_id = #{companyId}
+    </update>
+</mapper>
