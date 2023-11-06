@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myhd.mapper.CompanyMapper">
+
+    <select id="findById" resultType="com.myhd.entity.Company">
+        select company_id, company_icon, company_name, company_type, company_scale, company_home, company_field, company_address, company_text from tb_company where company_id = #{id}
+    </select>
+</mapper>

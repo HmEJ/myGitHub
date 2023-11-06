@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    @author: JoneElmo
+    @date: 2023-10-24
+-->
+<mapper namespace="com.myhd.mapper.RecruitMapper">
+    <select id="getRecruitByCompanyId" resultType="com.myhd.entity.Recruit"  parameterType="int">
+        select r.company_id, r.recruit_id, r.company_name, recruit_name, recruit_tag,
+               r.recruit_address, recruit_salary_max, recruit_salary_min,
+               recruit_number, recruit_degree, recruit_age, recruit_exp,
+               recruit_type, recruit_time, recruit_text_duty, recruit_text_need,
+               job_field , a.user_id
+        from tb_recruit r
+        left join tb_apply a
+        on a.recruit_id = r.recruit_id and a.company_id = r.company_id and user_id = #{userId}
+        where r.company_id = #{companyId}
+    </select>
+
+    <select id="getRecruitInfo" resultType="com.myhd.entity.Recruit">
+        select r.company_id, r.recruit_id, r.company_name, recruit_name, recruit_tag,
+               r.recruit_address, recruit_salary_max, recruit_salary_min, recruit_number,
+               recruit_degree, recruit_age, recruit_exp, recruit_type, recruit_time,
+               recruit_text_duty, recruit_text_need, job_field, a.user_id
+        from tb_recruit r
+        left join tb_apply a
+        on a.recruit_id = r.recruit_id and a.company_id = r.company_id and user_id = #{userId}
+        where r.company_id = #{companyId} and r.recruit_id = #{recruitId}
+    </select>
+
+    <sql id="likeSelect">
+        <!-- 使用 CONCAT 函数和 '%' 进行模糊查询 -->
+        select r.company_id, r.recruit_id, r.company_name, recruit_name, recruit_tag,
+        r.recruit_address, recruit_salary_max, recruit_salary_min, recruit_number,
+        recruit_degree, recruit_age, recruit_exp, recruit_type, recruit_time,
+        recruit_text_duty, recruit_text_need, job_field, c.company_scale ,a.user_id
+        from tb_recruit r
+        left join tb_apply a using (company_id,recruit_id)
+        join tb_company c using (company_id)
+    </sql>
+
+    <select id="getLikeInfo" resultType="com.myhd.entity.Recruit" parameterType="java.lang.String">
+        <include refid="likeSelect"></include>
+        <where>
+            <if test="like != null">
+                r.recruit_name like CONCAT('%', #{like}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getInfoViaQuickMethod" resultType="com.myhd.entity.Recruit" parameterType="int">
+        <include refid="likeSelect"></include>
+        <where>
+            <if test="like != null">
+                r.job_field = #{like}
+            </if>
+        </where>
+    </select>
+
+    <select id="getHighSalary" resultMap="highSalaryResultMap">
+        <!-- 连接企业表以获取公司的 logo -->
+        select r.company_id, r.recruit_id, r.company_name, recruit_name,recruit_salary_max, recruit_salary_min,c.company_icon
+        from tb_recruit r
+        left join tb_company c
+        on r.company_id = c.company_id
+        <!-- 根据薪资 max 值降序排序 -->
+        order by r.recruit_salary_max desc
+    </select>
+
+    <!-- 定义 resultMap 来映射结果 -->
+    <resultMap id="highSalaryResultMap" type="com.myhd.entity.Recruit" autoMapping="true">
+        <id property="recruitId" column="recruit_id"/>
+        <id property="companyId" column="company_id"/>
+        <!-- 映射公司的 logo 到 Recruit 对象 -->
+        <association property="company" javaType="com.myhd.entity.Company" autoMapping="true">
+            <id property="tbId" column="tb_id"/>
+        </association>
+    </resultMap>
+
+
+</mapper>

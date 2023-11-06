@@ -1,0 +1,36 @@
+package com.myhd.controller;
+
+import com.myhd.dto.LoginFormDTO;
+import com.myhd.service.IUserService;
+import com.myhd.util.Result;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+
+/**
+ * <p>
+ *  前端控制器
+ * </p>
+ *
+ * @author Jinhui-Huang
+ * @since 2023-10-22
+ */
+@RestController
+@RequestMapping("/login")
+public class UserController {
+
+    @Resource
+    private IUserService userService;
+
+
+    @PostMapping
+    public Result login(@RequestBody LoginFormDTO loginFormDTO){
+        return userService.login(loginFormDTO);
+    }
+
+    @GetMapping("/{phone}")
+    public Result sendCode(@PathVariable("phone") String phone){
+        return userService.sendCode(phone);
+    }
+
+}

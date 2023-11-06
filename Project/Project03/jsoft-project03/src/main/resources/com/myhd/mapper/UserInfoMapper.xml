@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    @author: JoneELmo
+    @date: 2023-10-24
+-->
+<mapper namespace="com.myhd.mapper.UserInfoMapper">
+    <insert id="saveUserInfo" parameterType="com.myhd.entity.UserInfo">
+        insert into
+        tb_user_info(user_id, email, phone, name, gender,
+                     birthday, resident, place, job_status, work_exp,
+                     wanted_nature, wanted_salary, wanted_location, wanted_type,
+                     school_name, graduation_time, degree, degree_type,
+                     major_name, major_type, grow_place)
+        values(
+               #{userId},#{email},#{phone},#{name},#{gender},
+               #{birthday},#{resident},#{place},#{jobStatus},#{workExp},
+               #{wantedNature},#{wantedSalary},#{wantedLocation},#{wantedType},
+               #{schoolName},#{graduationTime},#{degree},#{degreeType},
+               #{majorName},#{majorType},#{growPlace}
+              )
+    </insert>
+
+    <select id="getUserInfoById" resultType="com.myhd.entity.UserInfo" parameterType="int">
+        select tb_id, user_id, email, phone, name,
+               gender, birthday, resident, place,
+               job_status, work_exp, wanted_nature, wanted_salary, wanted_location,
+               wanted_type, school_name, graduation_time, degree, degree_type,
+               major_name, major_type, grow_place
+        from tb_user_info where user_id = #{userId}
+    </select>
+</mapper>

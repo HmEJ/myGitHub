@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    @author: JoneElmo
+    @date: 2023-10-24
+-->
+<mapper namespace="com.myhd.mapper.UserMapper">
+    <insert id="saveUser" parameterType="com.myhd.entity.User">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="email != null">
+                email,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            password,
+            user_id,
+            user_name
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            #{password},
+            #{userId},
+            #{userName}
+        </trim>
+    </insert>
+
+    <select id="isUserExist" parameterType="com.myhd.dto.FormDTO" resultType="int">
+        select count(tb_id) from tb_user
+        <where>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+            <if test="userEmail != null">
+                email = #{userEmail}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByArgs" resultType="com.myhd.entity.User" parameterType="com.myhd.dto.FormDTO">
+        select user_name,user_id,email,phone,password from tb_user
+        <where>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+            <if test="userEmail != null">
+                email = #{userEmail}
+            </if>
+            <if test="userName != null">
+                user_name = #{userName}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserPassword" parameterType="com.myhd.entity.User">
+        update tb_user set password = #{password}
+        <where>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+            <if test="userName != null">
+                user_name = #{userName}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateUser" parameterType="com.myhd.entity.User">
+        update tb_user
+        <set>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <select id="getUserById" resultType="com.myhd.entity.User">
+        select email, phone
+        from tb_user where user_id = #{userId}
+    </select>
+</mapper>
