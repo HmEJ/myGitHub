@@ -80,11 +80,8 @@
 5. [👉SpringMVC 10-11|10-12](SpringMVC03/SpringMVC02/SpringMVC45%2010-1112.md)
 6. [👉SSM整合](ssm-integration/记录.md)
 7. [👉maven聚合方式整合SSM](web-aggregation/记录.md)
-<<<<<<< HEAD
-8. [👉springboot学习记录]
-=======
 8. [👉springboot整合 | 三期项目准备阶段](springboot-jsoft03/记录.md)
->>>>>>> 939f44b9a92a341f02938d3d3d9fe2a00dc483e2
+9. [👉springboot学习记录](springboot-helloworld/学习记录.md)
 
 ## 设计模式
 
