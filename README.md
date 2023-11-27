@@ -9,7 +9,7 @@
 <a href="https://www.douyin.com/user/MS4wLjABAAAAtanaGDoe_VRcpfRVAsEoYSTvSf4AnjXw2qPgWDvaosw"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%8A%96%E9%9F%B3-%E9%97%9C%E6%B3%A8%E6%88%91-brightgreen?logo=tiktok">
 </a>
 
-👋hi，这是一个旧的仓库，学习笔记已经不再更新，我将它拆分为了一个全新的public仓库。
+👋hi，这是一个旧的仓库，学习笔记已经不再更新，我将它拆分为了一个[全新的仓库](https://github.com/HmEJ/StudyNotes)。
 
 1. [👉学习笔记](Study_Notes)
 2. [👉算法](Algorithm)
