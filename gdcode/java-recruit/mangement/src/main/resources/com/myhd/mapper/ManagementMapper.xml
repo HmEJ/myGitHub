@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myhd.mapper.ManagementMapper">
+
+    <select id="getAllUserInfo" resultType="com.myhd.entity.ManagementUserInfoReturn">
+        select *
+        from tb_user_info
+    </select>
+
+    <select id="getCompanyInfo" resultType="com.myhd.entity.Company">
+        select * from tb_company
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.myhd.entity.ManagementUserInfoReturn">
+        update tb_user_info
+        set email = #{email},
+            phone = #{phone},
+            name = #{name},
+            gender = #{gender},
+            school_name = #{schoolName},
+            degree = #{degree},
+            major_name = #{majorName}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateCompanyInfo" parameterType="com.myhd.entity.Company">
+        update tb_company
+        set company_name = #{companyName},
+            company_type = #{companyType},
+            company_scale = #{companyScale},
+            company_field = #{companyField},
+            company_address = #{companyAddress}
+        where company_id = #{companyId}
+    </update>
+
+    <delete id="deleteUserInfo" parameterType="integer">
+        delete from tb_user_info
+        where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteCompanyInfo" parameterType="integer">
+        delete from tb_company
+        where company_id = #{companyId}
+    </delete>
+
+    <insert id="addUser" parameterType="com.myhd.entity.ManagementUserInfoReturn">
+        insert into tb_user_info(name,email,phone,gender,school_name,degree,major_name)
+        values (#{name},#{email},#{phone},#{gender},#{schoolName},#{degree},#{majorName})
+    </insert>
+
+    <insert id="addCom" parameterType="com.myhd.entity.Company">
+        insert into tb_company(company_name,company_type,company_scale,company_field,company_address)
+        values (#{companyName},#{companyType},#{companyScale},#{companyField},#{companyAddress})
+    </insert>
+
+</mapper>

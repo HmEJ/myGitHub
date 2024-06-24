@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+spring:
+  application:
+    name: gd
+  task:
+    scheduling:
+      pool:
+        size: 9
+    execution:
+      pool:
+        core-size: 3
+        max-size: 9
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/gd?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  redis:
+    host: 127.0.0.1
+    port: 6380
+#    password:
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 1
+        time-between-eviction-runs: 10s
+  mail:
+    host: smtp.qq.com
+    username: mhangggggg@qq.com
+    password: rvpjfmiimuyhecdi
+    default-encoding: UTF-8
+    port: 587
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.myhd.mapper
+knife4j:
+  enable: true
+  openapi:
+    title: 招聘网站接口文档
+    description: "接口文档"
+    email: mhangggggg@qq.com
+    concat: JoneElmo
+    url: https://ahang.icu
+    version: v1.0
+    group:
+      test1:
+        group-name: 默认分组
+        api-rule: package
+        api-rule-resources:
+          - com.myhd.controller

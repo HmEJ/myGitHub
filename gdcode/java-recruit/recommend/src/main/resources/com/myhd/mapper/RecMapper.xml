@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    @author: JoneElmo
+    @date: 2023-10-24
+-->
+<mapper namespace="com.myhd.mapper.RecMapper">
+
+    <select id="getRecruitInfoByIdList" resultType="com.myhd.dto.RecReturnDTO">
+        <!-- 连接企业表以获取公司的 logo -->
+        select r.company_id, r.recruit_id, r.company_name, recruit_name ,recruit_salary,c.company_icon
+        from tb_recruit r
+        left join tb_company c
+        on r.company_id = c.company_id
+        <where>
+            1=1
+            <if test="ids!=null and ids.size()>0">
+                and r.recruit_id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+        <select id="getInitRec" resultType="com.myhd.dto.RecReturnDTO" parameterType="com.myhd.dto.InitRecDTO">
+            select r.recruit_id, r.recruit_name, r.company_name, r.company_id, r.recruit_salary, c.company_icon
+            from tb_recruit r
+            join tb_company c
+            where c.company_field = #{userInitField}
+            <if test="userInitTecList != null and userInitTecList.size() > 0">
+                and
+                <foreach collection="userInitTecList" item="item" separator="or">
+                    r.recruit_name like concat('%', #{item}, '%')
+                </foreach>
+            </if>
+            limit 10
+        </select>
+
+    <insert id="saveInit" parameterType="com.myhd.entity.InitRec">
+        insert into tb_init_rec (user_id, user_init_field, user_init_tec)
+        values (#{userId}, #{userInitField}, #{userInitTec})
+    </insert>
+
+    <select id="getList" resultType="integer">
+        select recruit_id
+        from tb_apply
+        where user_id = #{userId}
+    </select>
+
+    <select id="getFollowList" resultType="integer">
+        select company_id
+        from tb_follow
+        where user_id = #{userId}
+          and follow_status = 1
+    </select>
+
+    <select id="getRecruitByCompanyIdList" resultType="java.lang.Integer">
+        select recruit_id
+        from tb_recruit
+        <where>
+            company_id in
+            <foreach collection="companyIdList" item="companyId" open="(" separator="," close=")">
+                #{companyId}
+            </foreach>
+        </where>
+    </select>
+
+    <insert id="insertRating">
+        insert into rating_csv(userId, movieId, rating, timestamp)
+        values (
+        <if test="id!=null">
+            #{id},
+        </if>
+        <if test="k!=null">
+            #{k},
+        </if>
+        <if test="rating!=null">
+            #{rating},
+        </if>
+        <if test="timeStamp!=null">
+            #{timeStamp},
+        </if>
+        )
+    </insert>
+</mapper>

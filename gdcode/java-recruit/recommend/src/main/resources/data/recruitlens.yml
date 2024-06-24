@@ -1,0 +1,24 @@
+ratings:
+  file: rating.csv
+  format: csv
+  header: true
+  entity_type: rating
+  columns:
+    userId:
+      name: user
+      type: long
+    movieId:
+      name: item
+      type: long
+    rating:
+      name: rating
+      type: double
+    timestamp:
+      name: timestamp
+      type: long
+items:
+  file: item.csv
+  format: csv
+  header: true
+  entity_type: item
+  columns: [id, name,genres]

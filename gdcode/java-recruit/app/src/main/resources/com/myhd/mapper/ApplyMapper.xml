@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myhd.mapper.ApplyMapper">
+
+    <insert id="insertApplyInfo">
+        insert into tb_apply(user_id, recruit_id, company_id) values (#{userId}, #{recruitId}, #{companyId})
+    </insert>
+
+
+    <select id="getAllUserApply" resultType="com.myhd.entity.Recruit">
+        select r.recruit_id,r.company_id,r.company_name,recruit_name,r.recruit_address,recruit_time,recruit_tag,recruit_salary_max,recruit_salary_min,recruit_salary,recruit_number,recruit_degree,recruit_age,recruit_exp,recruit_type,recruit_text_duty,recruit_text_need,job_field,tf.follow_status,tc.company_scale
+        from tb_apply a
+        join tb_recruit r on a.company_id = r.company_id and a.recruit_id = r.recruit_id
+        left join tb_follow tf on a.company_id = tf.company_id and tf.user_id = #{userId}
+        join tb_company tc on a.company_id = tc.company_id
+        <where>
+            <if test="like != 'null'">
+                and recruit_name like concat('%' #{like} '%')
+            </if>
+
+            <if test="userId != null">
+                and a.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
